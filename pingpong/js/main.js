@@ -8,19 +8,17 @@
     class Balls {
         constructor(canvas) {
             this.balls = []
-            for (let i = 0; i < rand(2, 5); i++) {
+            for (let i = 0; i < rand(3, 6); i++) {
                 this.balls.push(new Ball(canvas))
             }
         }
 
         getBalls() {
-            return this.balls
+            return this.balls;
         }
 
         update() {
-            this.balls.forEach(ball => {
-                ball.update()
-            })
+            this.balls.forEach(ball => ball.update())
         }
 
         isAllMissed() {
@@ -29,9 +27,7 @@
         }
 
         draw() {
-            this.balls.forEach(ball => {
-                ball.draw()
-            })
+            this.balls.forEach(ball => ball.draw())
         }
     }
 
@@ -184,10 +180,8 @@
         }
 
         update() {
-            this.balls.update()
-            this.balls.getBalls().forEach(ball => {
-                this.paddle.update(ball);
-            })
+            this.balls.update();
+            this.balls.getBalls().forEach(ball => this.paddle.update(ball));
 
             if (this.balls.isAllMissed()) {
                 this.isGameOver = true;
