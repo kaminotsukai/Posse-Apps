@@ -11,6 +11,10 @@
             for (let i = 0; i < rand(3, 6); i++) {
                 this.balls.push(new Ball(canvas))
             }
+            this.maxChangeUpCommandCount = rand(3, 10)
+            this.changeUpCount = 0
+            this.changeUpCommand()
+            console.log("max change up command count: ", this.maxChangeUpCommandCount)
         }
 
         getBalls() {
@@ -19,6 +23,17 @@
 
         update() {
             this.balls.forEach(ball => ball.update())
+        }
+
+        changeUpCommand() {
+            addEventListener("keydown", (e) => {
+                this.changeUpCount++
+                if (this.changeUpCount >= this.maxChangeUpCommandCount) {
+                    this.balls.forEach(ball => ball.isMissed = true)
+                }
+
+                this.balls.forEach(ball => ball.changeUpCommand(e))
+            });
         }
 
         isAllMissed() {
@@ -41,19 +56,16 @@
             this.vx = rand(2, 4) * (Math.random() < 0.5 ? 1 : -1);
             this.vy = rand(2, 4);
             this.isMissed = false;
-            this.changeUpCommand()
         }
 
         // スペースキー押下で下移動のボールのみ、上移動に変換する
-        changeUpCommand() {
-            addEventListener("keydown", (e) => {
-                // 生存しているボールのみ反転するようにする
-                if (e.code === "Space" && !this.isMissed && !e.repeat) {
-                    if (this.vy > 0) {
-                        this.vy *= -1
-                    }
+        changeUpCommand(e) {
+            // 生存しているボールのみ反転するようにする
+            if (e.code === "Space" && !this.isMissed && !e.repeat) {
+                if (this.vy > 0) {
+                    this.vy *= -1
                 }
-            });
+            }
         }
 
         getMissedStatus() {
