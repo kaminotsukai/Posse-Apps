@@ -41,6 +41,19 @@
             this.vx = rand(2, 4) * (Math.random() < 0.5 ? 1 : -1);
             this.vy = rand(2, 4);
             this.isMissed = false;
+            this.changeUpCommand()
+        }
+
+        // スペースキー押下で下移動のボールのみ、上移動に変換する
+        changeUpCommand() {
+            addEventListener("keydown", (e) => {
+                // 生存しているボールのみ反転するようにする
+                if (e.code === "Space" && !this.isMissed) {
+                    if (this.vy > 0) {
+                        this.vy *= -1
+                    }
+                }
+            });
         }
 
         getMissedStatus() {
