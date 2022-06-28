@@ -6,15 +6,16 @@
     }
 
     class Balls {
-        constructor(canvas) {
+        constructor() {
             this.balls = []
-            for (let i = 0; i < rand(3, 6); i++) {
-                this.balls.push(new Ball(canvas))
-            }
             this.maxChangeUpCommandCount = rand(3, 10)
             this.changeUpCount = 0
             this.changeUpCommand()
             console.log("max change up command count: ", this.maxChangeUpCommandCount)
+        }
+
+        add(ball) {
+            this.balls.push(ball)
         }
 
         getBalls() {
@@ -177,10 +178,15 @@
         constructor(canvas) {
             this.canvas = canvas;
             this.ctx = this.canvas.getContext("2d");
-            this.balls = new Balls(this.canvas)
             this.paddle = new Paddle(this.canvas, this);
             this.isGameOver = false;
             this.score = 0;
+
+            this.balls = new Balls()
+            this.ballCount = rand(3, 6)
+            for (let i = 0; i < this.ballCount; i++) {
+                this.balls.add(new Ball(this.canvas))
+            }
         }
 
         addScore() {
@@ -207,6 +213,7 @@
         update() {
             this.balls.update();
             this.balls.getBalls().forEach(ball => this.paddle.update(ball));
+
 
             if (this.balls.isAllMissed()) {
                 this.isGameOver = true;
