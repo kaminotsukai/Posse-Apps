@@ -48,7 +48,7 @@
         changeUpCommand() {
             addEventListener("keydown", (e) => {
                 // 生存しているボールのみ反転するようにする
-                if (e.code === "Space" && !this.isMissed) {
+                if (e.code === "Space" && !this.isMissed && !e.repeat) {
                     if (this.vy > 0) {
                         this.vy *= -1
                     }
