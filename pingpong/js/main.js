@@ -8,10 +8,7 @@
     class Balls {
         constructor() {
             this.balls = []
-            this.maxChangeUpCommandCount = rand(3, 10)
-            this.changeUpCount = 0
             this.changeUpCommand()
-            console.log("max change up command count: ", this.maxChangeUpCommandCount)
         }
 
         add(ball) {
