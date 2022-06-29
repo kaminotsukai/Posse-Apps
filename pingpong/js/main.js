@@ -28,12 +28,15 @@
 
         changeUpCommand() {
             addEventListener("keydown", (e) => {
-                this.changeUpCount++
-                if (this.changeUpCount >= this.maxChangeUpCommandCount) {
-                    this.balls.forEach(ball => ball.isMissed = true)
-                }
+                if (e.code === "Space" && !this.isMissed && !e.repeat) {
 
-                this.balls.forEach(ball => ball.changeUpCommand(e))
+                    this.changeUpCount++
+                    if (this.changeUpCount >= this.maxChangeUpCommandCount) {
+                        this.balls.forEach(ball => ball.isMissed = true)
+                    }
+
+                    this.balls.forEach(ball => ball.changeUpCommand(e))
+                }
             });
         }
 
@@ -60,12 +63,9 @@
         }
 
         // スペースキー押下で下移動のボールのみ、上移動に変換する
-        changeUpCommand(e) {
-            // 生存しているボールのみ反転するようにする
-            if (e.code === "Space" && !this.isMissed && !e.repeat) {
-                if (this.vy > 0) {
-                    this.vy *= -1
-                }
+        changeUpCommand() {
+            if (this.vy > 0) {
+                this.vy *= -1
             }
         }
 
@@ -183,8 +183,7 @@
             this.score = 0;
 
             this.balls = new Balls()
-            this.ballCount = rand(3, 6)
-            for (let i = 0; i < this.ballCount; i++) {
+            for (let i = 0; i < rand(3, 6); i++) {
                 this.balls.add(new Ball(this.canvas))
             }
         }
