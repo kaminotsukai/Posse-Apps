@@ -28,13 +28,7 @@
 
         changeUpCommand() {
             addEventListener("keydown", (e) => {
-                if (e.code === "Space" && !this.isMissed && !e.repeat) {
-
-                    this.changeUpCount++
-                    if (this.changeUpCount >= this.maxChangeUpCommandCount) {
-                        this.balls.forEach(ball => ball.isMissed = true)
-                    }
-
+                if (e.code === "Space" && !e.repeat) {
                     this.balls.forEach(ball => ball.changeUpCommand(e))
                 }
             });
@@ -64,7 +58,7 @@
 
         // スペースキー押下で下移動のボールのみ、上移動に変換する
         changeUpCommand() {
-            if (this.vy > 0) {
+            if (!this.isMissed && this.vy > 0) {
                 this.vy *= -1
             }
         }
