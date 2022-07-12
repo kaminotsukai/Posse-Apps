@@ -8,6 +8,8 @@
     class Balls {
         constructor() {
             this.balls = []
+            this.maxChangeUpCommandCount = 5
+            this.changeUpCount = 0
             this.changeUpCommand()
         }
 
@@ -26,6 +28,12 @@
         changeUpCommand() {
             addEventListener("keydown", (e) => {
                 if (e.code === "Space" && !e.repeat) {
+
+                    this.changeUpCount++
+                    if (this.changeUpCount >= this.maxChangeUpCommandCount) {
+                        this.balls.forEach(ball => ball.isMissed = true)
+                    }
+
                     this.balls.forEach(ball => ball.changeUpCommand(e))
                 }
             });
